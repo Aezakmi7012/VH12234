@@ -134,6 +134,6 @@ app.get('/:shortCode', async (req, res) => {
 });
 
 app.listen(port, async () => {
-    await logInfo('backend', 'service', `URL Shortener service successfully started on port ${port}, accepting connections at http://localhost:${port}`);
+    await logInfo('backend', 'service', `successfully started`);
     console.log(`URL Shortener service running at http://localhost:${port}`);
 });
