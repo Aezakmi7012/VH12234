@@ -1,5 +1,5 @@
 {
-  "name": "new-folder",
+  "name": "url-shortener",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,5 +9,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs",
+  "dependencies": {
+    "axios": "^1.10.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "nanoid": "^5.1.5"
+  }
 }
