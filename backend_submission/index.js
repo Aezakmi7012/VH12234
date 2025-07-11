@@ -75,8 +75,6 @@ app.get('/shorturls/:abcd1', async (req, res) => {
             await logWarn('backend', 'handler', `Analytics request failed`);
             return res.status(404).json({ error: 'shortCode not found' });
         }
-
-        await logError('backend', 'handler', 'Data structure mismatch');
         
         const analytics = {
             shortCode: abcd1,
