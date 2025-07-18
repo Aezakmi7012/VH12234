@@ -26,6 +26,11 @@ const Log = async (stack, level, package, message, bearerToken = null) => {
     
     const allValidPackages = [...backendPackages,  ...universalPackages];
 
+    if (!allValidPackages.includes(package.toLowerCase())) {
+        console.error(`Invalid package: ${package}`);
+        return;
+    }
+
     const logData = {
         "stack": stack.toLowerCase(),
         "level": level.toLowerCase(),
