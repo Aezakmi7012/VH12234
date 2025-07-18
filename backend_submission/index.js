@@ -33,7 +33,7 @@ app.post('/shorturls', async (req, res) => {
     try {
         const { longUrl, shortCode, validity } = req.body;
         
-        await logInfo('backend', 'handler', `Creating short URL request received`);
+        await logInfo('backend', 'handler', `Creating short URL`);
         
         if (!longUrl) {
             const errorMessage = 'Error: longUrl is required';
@@ -119,7 +119,7 @@ app.post('/shorturls', async (req, res) => {
 
         if (urlMapping[code]) {
             const errorMessage = 'Error: shortCode already exists';
-            await logError('backend', 'handler', `shortCode '${code}' already exists in mapping`);
+            await logError('backend', 'handler', `shortCode already exists in mapping`);
             return res.status(400).json({ error: errorMessage });
         }
 
@@ -131,7 +131,7 @@ app.post('/shorturls', async (req, res) => {
             expiry 
         };
         
-        await logInfo('backend', 'service', `Successfully created URL mapping for code: ${code}`);
+        await logInfo('backend', 'service', `created URL mapping`);
         res.status(201).json({ 
             shortCode: code, 
             longUrl: sanitizedLongUrl, 
