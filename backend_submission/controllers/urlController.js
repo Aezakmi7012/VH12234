@@ -145,9 +145,9 @@ async function getAnalytics(req, res) {
             clickCount: url.clickCount,
             createdAt: new Date(url.createdAt).toISOString(),
             expiry: new Date(url.expiry).toISOString(),
-            isExpired: Date.now() > url.expiry
+            isExpired: Date.now() > url.expiry,
+            clicks: url.clicks || []
         };
-        
         await logInfo('backend', 'service', `Analytics data retrieved`);
         res.status(200).json(analytics);
         
@@ -192,6 +192,13 @@ async function redirectToUrl(req, res) {
             return res.status(410).json({ error: errorMessage });
         }
 
+        const clickDetails = {
+            timestamp: new Date().toISOString(),
+            referrer: req.get('referer') || null,
+            location: req.headers['x-forwarded-for'] || req.connection.remoteAddress || null
+        };
+        if (!entry.clicks) entry.clicks = [];
+        entry.clicks.push(clickDetails);
         incrementClickCount(sanitizedCode);
         await logInfo('backend', 'service', `Incremented click count`);
 
@@ -200,9 +207,8 @@ async function redirectToUrl(req, res) {
             url = `http://${url}`;
             await logInfo('backend', 'utils', `Added http:// protocol to URL: ${url}`);
         }
-        
+
         await logInfo('backend', 'handler', `Successful redirect: ${sanitizedCode} -> ${url}`);
-     //   console.log(url);
         res.redirect(url);
         
     } catch (error) {
