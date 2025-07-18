@@ -33,17 +33,23 @@ const Log = async (stack, level, package, message, bearerToken = null) => {
         "message": message
     };
     try{
+        const authToken = bearerToken || process.env.LOG_API_TOKEN;
+        
+        if (!authToken) {
+            console.error('No authorization token available');
+            return;
+        }
 
-     /*   const response = await axios.post('http://20.244.56.144/evaluation-service/logs', logData, {
+     /*  const response = await axios.post('http://20.244.56.144/evaluation-service/logs', logData, {
             headers: {
                 "Content-Type" : "application/json",
-                'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNYXBDbGFpbXMiOnsiYXVkIjoiaHR0cDovLzIwLjI0NC41Ni4xNDQvZXZhbHVhdGlvbi1zZXJ2aWNlIiwiZW1haWwiOiJhc2h3aW4yMDI1MDdAZ21haWwuY29tIiwiZXhwIjoxNzUyMjE2OTE5LCJpYXQiOjE3NTIyMTYwMTksImlzcyI6IkFmZm9yZCBNZWRpY2FsIFRlY2hub2xvZ2llcyBQcml2YXRlIExpbWl0ZWQiLCJqdGkiOiJjYTE5N2VlOS1kM2EzLTQyNTgtYTZkMC02NjlkZGM3MjNmNjgiLCJsb2NhbGUiOiJlbi1JTiIsIm5hbWUiOiJhc3dpbiBtIiwic3ViIjoiNzY5ZjdhZDAtMjljMC00ZTk2LWI0NmQtMGM0NTE0MGZhZTIxIn0sImVtYWlsIjoiYXNod2luMjAyNTA3QGdtYWlsLmNvbSIsIm5hbWUiOiJhc3dpbiBtIiwicm9sbE5vIjoidmgxMjIzNCIsImFjY2Vzc0NvZGUiOiJDV2JxZ0siLCJjbGllbnRJRCI6Ijc2OWY3YWQwLTI5YzAtNGU5Ni1iNDZkLTBjNDUxNDBmYWUyMSIsImNsaWVudFNlY3JldCI6IkZuQ2ZRZWhlZnZCdFJDemYifQ.R6uY9Ywzd_9UJC9Wb8GKYk_V_sJHt5d65Rgh5f1jdjA`
+                'Authorization': `Bearer ${authToken}`
             },
         });
         console.log(response.data);        
-        return response.data; */
-        console.log("logged")
-        return
+        return response.data;  */
+        console.log("logged");
+        return; 
     }
     catch(e){
         let c = 0;
