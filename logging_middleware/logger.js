@@ -52,14 +52,8 @@ const Log = async (stack, level, package, message, bearerToken = null) => {
         return; 
     }
     catch(e){
-        let c = 0;
-        if(c>0){
-        console.log("errored out");
-        }
-        else{
-            console.log("Server running");
-            c+=1;
-        }
+        console.error('Error logging data:', e.message);
+        return { error: 'Failed to log data' };
     }
     
 };
@@ -73,7 +67,7 @@ const logFatal = (stack, package, message, bearerToken) => Log(stack, 'fatal', p
 const errorLogger = (bearerToken = null) => {
     return (error, req, res, next) => {
         Log('backend', 'error', 'middleware', 
-            `Unhandled error in ${req.method} ${req.path}: ${error.message}. Stack: ${error.stack}`, 
+            `Unhandled error`, 
             bearerToken);
         next(error);
     };
