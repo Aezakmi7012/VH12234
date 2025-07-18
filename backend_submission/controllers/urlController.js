@@ -2,6 +2,18 @@ const { logInfo, logError, logWarn } = require('../../logging_middleware/logger'
 const { isValidUrl, isValidShortCode, sanitizeInput } = require('../utils/validation');
 const { createUrlMapping, getUrlMapping, shortCodeExists, incrementClickCount, deleteUrlMapping } = require('../services/urlService');
 
+function generateBase62Code(length = 6) {
+    const base62 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    
+    for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * base62.length);
+        result += base62[randomIndex];
+    }
+    
+    return result;
+}
+
 async function createShortUrl(req, res) {
     try {
         const { longUrl, shortCode, validity } = req.body;
@@ -85,9 +97,8 @@ async function createShortUrl(req, res) {
             code = sanitizedShortCode;
             await logInfo('backend', 'handler', `Using custom shortCode`);
         } else {
-            const { nanoid } = await import('nanoid');
-            code = nanoid(6);
-            await logInfo('backend', 'utils', `Generated shortCode`);
+            code = generateBase62Code(6);
+            await logInfo('backend', 'utils', `Generated shortCode using base62 encoding`);
         }
 
         if (shortCodeExists(code)) {
