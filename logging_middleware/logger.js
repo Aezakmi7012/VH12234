@@ -2,6 +2,7 @@ const axios = require('axios');
 const { application, json } = require('express');
 
 require('dotenv').config();
+
 const Log = async (stack, level, package, message, bearerToken = null) => {
 
     if (!stack || !level || !package || !message) {
